@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
     position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
   }),
   price: {
     position: 'absolute',

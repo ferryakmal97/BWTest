@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -6,29 +6,38 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import AppLovinMAX from 'react-native-applovin-max';
 import {Play} from '../../assets';
 import {CGap, CHeader} from '../../components';
-import {colors, width} from '../../utils';
+import {
+  BANNER_AD_UNIT_ID,
+  colors,
+  INTERSTITIAL_AD_UNIT_ID,
+  loadInterstitial,
+  width,
+} from '../../utils';
 
-class DetailScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      index: props.route.params.index,
-      thumbnail: props.route.params.thumbnail,
-      hour: props.route.params.hour,
-      course: props.route.params.course,
-      description: props.route.params.description,
-      price: props.route.params.price,
-      tags: [
-        {title: 'lessons', active: true},
-        {title: 'Tests', active: false},
-        {title: 'Discuss', active: false},
-      ],
-    };
-  }
+const DetailScreen = props => {
+  const [state, setState] = useState({
+    index: props.route.params.index,
+    thumbnail: props.route.params.thumbnail,
+    hour: props.route.params.hour,
+    course: props.route.params.course,
+    description: props.route.params.description,
+    price: props.route.params.price,
+    tags: [
+      {title: 'lessons', active: true},
+      {title: 'Tests', active: false},
+      {title: 'Discuss', active: false},
+    ],
+  });
 
-  tagsStyle = index => {
+  useEffect(() => {
+    loadInterstitial();
+    AppLovinMAX.showInterstitial(INTERSTITIAL_AD_UNIT_ID);
+  }, []);
+
+  const tagsStyle = index => {
     switch (index) {
       case 0:
         return styles.lessonsButton;
@@ -41,9 +50,10 @@ class DetailScreen extends Component {
     }
   };
 
-  changeTag = index => {
-    this.setState(prevState => ({
-      tags: prevState.tags.map((value, idx) => {
+  const changeTag = index => {
+    setState(prev => ({
+      ...prev,
+      tags: prev.tags.map((value, idx) => {
         if (idx === index) {
           return {...value, active: true};
         } else {
@@ -53,69 +63,72 @@ class DetailScreen extends Component {
     }));
   };
 
-  render() {
-    const {thumbnail, hour, course, description, price, test, index, tags} =
-      this.state;
-    return (
-      <View style={styles.container}>
-        <CHeader title={course} />
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={styles.container2}>
-          <View style={styles.tags}>
-            <Text style={styles.tagsText}> Tags For Headers </Text>
-            <Text style={styles.lessons}> 3 of 11 lessons </Text>
-            <View style={styles.sub}>
-              {tags.map((value, index) => {
-                return (
-                  <TouchableOpacity
-                    key={index}
-                    activeOpacity={0.7}
-                    style={this.tagsStyle(index)}
-                    onPress={() => this.changeTag(index)}>
-                    <Text style={styles.subText(value.active)}>
-                      {value.title}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
+  const {thumbnail, hour, course, description, price, test, index, tags} =
+    state;
+  return (
+    <View style={styles.container}>
+      <CHeader title={course} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.container2}>
+        <View style={styles.tags}>
+          <Text style={styles.tagsText}> Tags For Headers </Text>
+          <Text style={styles.lessons}> 3 of 11 lessons </Text>
+          <View style={styles.sub}>
+            {tags.map((value, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  activeOpacity={0.7}
+                  style={tagsStyle(index)}
+                  onPress={() => changeTag(index)}>
+                  <Text style={styles.subText(value.active)}>
+                    {value.title}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
-          <View style={styles.content}>
-            <View style={styles.imageContainer(index)}>
-              {thumbnail}
-              <TouchableOpacity activeOpacity={0.7} style={styles.play}>
-                <Play />
-              </TouchableOpacity>
-            </View>
-            <CGap height={12} />
-            <Text style={styles.tagsText}>Introduction</Text>
-            <Text style={styles.textContent}>
-              You can launch a new career in web develop- ment today by learning
-              HTML & CSS. You don't need a computer science degree or expensive
-              software. All you need is a computer, a bit of time, a lot of
-              determination, and a teacher you trust. Once the form data has
-              been validated on the client-side, it is okay to submit the form.
-              And, since we covered validation in the previous article, we're
-              ready to submit! This article looks at what happens when a user
-              submits a form — where does the data go, and how do we handle it
-              when it gets there? We also look at some of the security concerns.
-              You can launch a new career in web develop- ment today by learning
-              HTML & CSS. You don't need a computer science degree or expensive
-              software. All you need is a computer, a bit of time, a lot of
-              determination, and a teacher you trust. Once the form data has
-              been validated on the client-side, it is okay to submit the form.
-              And, since we covered validation in the previous article, we're
-              ready to submit! This article looks at what happens when a user
-              submits a form — where does the data go, and how do we handle it
-              when it gets there? We also look at some of the security concerns.
-            </Text>
+        </View>
+        <View style={styles.content}>
+          <View style={styles.imageContainer(index)}>
+            {thumbnail}
+            <TouchableOpacity activeOpacity={0.7} style={styles.play}>
+              <Play />
+            </TouchableOpacity>
           </View>
-        </ScrollView>
-      </View>
-    );
-  }
-}
+          <CGap height={12} />
+          <Text style={styles.tagsText}>Introduction</Text>
+          <Text style={styles.textContent}>
+            You can launch a new career in web develop- ment today by learning
+            HTML & CSS. You don't need a computer science degree or expensive
+            software. All you need is a computer, a bit of time, a lot of
+            determination, and a teacher you trust. Once the form data has been
+            validated on the client-side, it is okay to submit the form. And,
+            since we covered validation in the previous article, we're ready to
+            submit! This article looks at what happens when a user submits a
+            form — where does the data go, and how do we handle it when it gets
+            there? We also look at some of the security concerns. You can launch
+            a new career in web develop- ment today by learning HTML & CSS. You
+            don't need a computer science degree or expensive software. All you
+            need is a computer, a bit of time, a lot of determination, and a
+            teacher you trust. Once the form data has been validated on the
+            client-side, it is okay to submit the form. And, since we covered
+            validation in the previous article, we're ready to submit! This
+            article looks at what happens when a user submits a form — where
+            does the data go, and how do we handle it when it gets there? We
+            also look at some of the security concerns.
+          </Text>
+        </View>
+      </ScrollView>
+      <AppLovinMAX.AdView
+        adUnitId={BANNER_AD_UNIT_ID}
+        adFormat={AppLovinMAX.AdFormat.BANNER}
+        style={styles.banner}
+      />
+    </View>
+  );
+};
 
 export default DetailScreen;
 
@@ -180,7 +193,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     backgroundColor: 'white',
     flex: 1,
-    paddingBottom: 20,
+    paddingBottom: 60,
   },
   imageContainer: index => ({
     backgroundColor: index % 2 == 0 ? colors.ink : colors.lightblue,
@@ -201,5 +214,12 @@ const styles = StyleSheet.create({
   textContent: {
     fontSize: 16,
     lineHeight: 24,
+  },
+  banner: {
+    // Set background color for banners to be fully functional
+    backgroundColor: '#000000',
+    position: 'absolute',
+    bottom: 0,
+    alignSelf: 'center',
   },
 });
