@@ -2,7 +2,11 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../utils';
 
-const CMiniList = ({name = 'List'}) => {
+interface props {
+  name: string;
+}
+
+const CMiniList = ({name = 'List'}: props) => {
   return (
     <TouchableOpacity style={styles.container} activeOpacity={0.7}>
       <Text style={styles.title}>{name}</Text>

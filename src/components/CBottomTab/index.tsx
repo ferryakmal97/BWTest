@@ -10,7 +10,7 @@ const CBottomTab = () => {
     {title: 'Settings', active: false, component: Setting},
   ]);
 
-  const changeTab = index => {
+  const changeTab = (index: number) => {
     setState(
       state.map((value, idx) => {
         if (idx === index) {

@@ -4,7 +4,11 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Previos} from '../../assets';
 import {colors} from '../../utils';
 
-const CHeader = ({title}) => {
+interface props {
+  title: string;
+}
+
+const CHeader = ({title}: props) => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>

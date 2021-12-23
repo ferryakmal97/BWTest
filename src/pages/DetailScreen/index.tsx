@@ -17,8 +17,18 @@ import {
   width,
 } from '../../utils';
 
+interface data {
+  index: number;
+  thumbnail: JSX.Element;
+  hour: string;
+  course: string;
+  description: string;
+  price: number;
+  tags: {title: string; active: boolean}[];
+}
+
 const DetailScreen = props => {
-  const [state, setState] = useState({
+  const [state, setState] = useState<data>({
     index: props.route.params.index,
     thumbnail: props.route.params.thumbnail,
     hour: props.route.params.hour,
@@ -37,7 +47,7 @@ const DetailScreen = props => {
     AppLovinMAX.showInterstitial(INTERSTITIAL_AD_UNIT_ID);
   }, []);
 
-  const tagsStyle = index => {
+  const tagsStyle = (index: number) => {
     switch (index) {
       case 0:
         return styles.lessonsButton;
@@ -50,7 +60,7 @@ const DetailScreen = props => {
     }
   };
 
-  const changeTag = index => {
+  const changeTag = (index: number) => {
     setState(prev => ({
       ...prev,
       tags: prev.tags.map((value, idx) => {
@@ -63,8 +73,7 @@ const DetailScreen = props => {
     }));
   };
 
-  const {thumbnail, hour, course, description, price, test, index, tags} =
-    state;
+  const {thumbnail, hour, course, description, price, index, tags} = state;
   return (
     <View style={styles.container}>
       <CHeader title={course} />
@@ -158,7 +167,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
   },
-  subText: active => ({
+  subText: (active: boolean) => ({
     fontSize: 24,
     fontWeight: active ? 'bold' : 'normal',
     color: 'black',
@@ -195,7 +204,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 60,
   },
-  imageContainer: index => ({
+  imageContainer: (index: number) => ({
     backgroundColor: index % 2 == 0 ? colors.ink : colors.lightblue,
     position: 'relative',
     alignItems: 'center',

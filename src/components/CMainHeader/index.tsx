@@ -3,7 +3,11 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Notification} from '../../assets';
 import {colors} from '../../utils';
 
-const CMainHeader = ({title}) => {
+interface props {
+  title: string;
+}
+
+const CMainHeader = ({title}: props) => {
   return (
     <View style={styles.container}>
       <View style={styles.helloContainer}>

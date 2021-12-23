@@ -1,7 +1,12 @@
 import React from 'react';
 import {View} from 'react-native';
 
-const CGap = ({width, height}) => {
+interface Gap {
+  width?: number;
+  height?: number;
+}
+
+const CGap = ({width, height}: Gap) => {
   return <View style={{width, height}} />;
 };
 

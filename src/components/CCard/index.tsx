@@ -1,24 +1,40 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  GestureResponderEvent,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {CMiniList} from '..';
 import {colors, width} from '../../utils';
 
+interface props {
+  Thumbnail: JSX.Element;
+  hour: string;
+  course: string;
+  description: string;
+  price: number;
+  backgroundColor: number;
+  onPress: (event: GestureResponderEvent) => void;
+}
+
 const CCard = ({
-  Thumbnail1,
+  Thumbnail,
   hour,
   course,
   description,
   price,
   backgroundColor,
   onPress,
-}) => {
+}: props) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={styles.container}
       activeOpacity={0.7}>
       <View style={styles.imageContainer(backgroundColor)}>
-        {Thumbnail1}
+        {Thumbnail}
         <View style={styles.price}>
           <CMiniList name={`$${price}`} />
         </View>
@@ -43,7 +59,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: 'white',
   },
-  imageContainer: index => ({
+  imageContainer: (index: number) => ({
     flex: 1,
     backgroundColor: index % 2 == 0 ? colors.ink : colors.lightblue,
     position: 'relative',

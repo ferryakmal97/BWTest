@@ -1,5 +1,7 @@
+import React from 'react';
 import {Platform} from 'react-native';
 import AppLovinMAX from 'react-native-applovin-max';
+import {Thumbnail1, Thumbnail2, Thumbnail3} from '../../assets';
 
 const BANNER_AD_UNIT_ID = Platform.select({
   android: 'YOUR_ANDROID_BANNER_AD_UNIT_ID',
@@ -28,7 +30,44 @@ function initializeBannerAds() {
   AppLovinMAX.setBannerBackgroundColor(BANNER_AD_UNIT_ID, '#000000');
 }
 
+const category = [
+  'CSS',
+  'UX',
+  'Swift',
+  'UI',
+  'HTML',
+  'Javascript',
+  'Golang',
+  'PHP',
+];
+
+const courses = [
+  {
+    thumbnail: <Thumbnail1 />,
+    hour: '3 h 30 min',
+    course: 'UI',
+    description: 'Advanced mobile interface design',
+    price: 50,
+  },
+  {
+    thumbnail: <Thumbnail2 />,
+    hour: '2 h 30 min',
+    course: 'HTML',
+    description: 'Advanced mobile interface design',
+    price: 100,
+  },
+  {
+    thumbnail: <Thumbnail3 />,
+    hour: '1 h 30 min',
+    course: 'CSS',
+    description: 'Advanced mobile interface design',
+    price: 200,
+  },
+];
+
 export {
+  category,
+  courses,
   BANNER_AD_UNIT_ID,
   INTERSTITIAL_AD_UNIT_ID,
   loadInterstitial,
